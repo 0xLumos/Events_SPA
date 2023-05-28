@@ -1,0 +1,300 @@
+openapi: 3.0.1
+info:
+  title: Mr.Gift
+  description: 'The API provided for the **Gift list shop**'
+  version: 1.0.0
+
+servers:
+- url: https://beyond-finance-8080.codio-box.uk/api/
+  description: Events and Gifts API
+
+paths:
+  /:
+    get:
+      tags:
+      - Base
+      summary: HATEOS API links
+      description: This API call is used to demonstrate HATEOS principles.
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+        
+        401:
+          description: invalid jwt token
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        description:
+                          type: string
+
+  /accounts:
+    get:
+      tags:
+      - Accounts
+      summary: Check authentication credentials
+      description: This API call is used to validate the credentials passed in the **Authorization headers**.
+      responses:
+        200:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  username:
+                    type: string
+        401:
+          description: invalid credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        description:
+                          type: string
+    post:
+      tags:
+      - Accounts
+      summary: Create a new account
+      description: This API call is used to create a new account.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                password:
+                  type: string
+      responses:
+        201:
+          description: account added
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  msg:
+                    type: string
+        400:
+          description: invalid credentials
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        description:
+                          type: string
+  # /files/:id                        
+  /files:
+    get:
+      tags:
+      - Events
+      summary: get available events
+      description: This API call is used to fetch saved events and their items .
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  title:
+                    type: string
+                  user:
+                    type: string
+                  picture: 
+                    type: string
+                  details:
+                    type: string
+                  datetime:
+                    type: string
+                  eventid:
+                    type: string
+                  stamp:
+                    type: string
+                  url:
+                    type: string
+                    
+ 
+    post:
+      tags:
+      - Events
+      summary: Add a new event
+      description: This API call is used to add a new event with up to 5 items.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+                type: object
+                properties:
+                  title:
+                    type: string
+                  image: 
+                    type: string
+                  description:
+                    type: string
+                  datetime:
+                    type: string
+      responses:
+        201:
+          description: event successfully added
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  msg:
+                    type: string
+        400:
+          description: invalid data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        description:
+                          type: string
+  /files/:id:
+    get:
+      tags:
+      - Events
+      summary: get event's details
+      description: This API call is used to fetch specific event's data .
+      responses:
+        200:
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                  title:
+                    type: string
+                  user:
+                    type: string
+                  picture: 
+                    type: string
+                  details:
+                    type: string
+                  datetime:
+                    type: string
+                  eventid:
+                    type: string
+                  stamp:
+                    type: string
+                  url:
+                    type: string
+                  item1:
+                    type: string
+                  item2:
+                    type: string
+                  item3:
+                    type: string
+                  item4:
+                    type: string  
+                  item5:
+                    type: string  
+ 
+    post:
+      tags:
+      - Events
+      summary: Pledge item's for specific events
+      description: This API call is used to add a new event with up to 5 items.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+                type: object
+                properties:
+                  title:
+                    type: string
+                  image: 
+                    type: string
+                  description:
+                    type: string
+                  datetime:
+                    type: string
+      responses:
+        201:
+          description: event successfully added
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                  msg:
+                    type: string
+        400:
+          description: invalid data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  errors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        title:
+                          type: string
+                        description:
+                          type: string                          
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+    jwt:
+      type: http
+      scheme: Bearer
